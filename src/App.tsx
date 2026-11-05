@@ -17,6 +17,7 @@ import { TechAdvisorView } from './components/techAdvisor/TechAdvisorView';
 import { ExpertFinderView } from './components/expertFinder/ExpertFinderView';
 import { PlannerView } from './components/afterlifePlanner/PlannerView';
 import { MODULE_PERSONAS } from './services/promptService';
+import { analyzeProjectViaBackend } from './services/apiService';
 import { fetchRepositoryDetails } from './services/githubService';
 import {
   analyzeProjectWithPersona,
@@ -45,24 +46,39 @@ export const App: React.FC = () => {
     setCurrentUrl(url);
 
     try {
-      // 1. Fetch real public repository details from GitHub
-      const details = await fetchRepositoryDetails(url);
-      setRepoDetails(details);
+      // 1. Primary path: Analyze via Python Flask Backend
+      try {
+        const analysis = await analyzeProjectViaBackend(url);
+        setRepoDetails(analysis.repoDetails);
+        setAnalyzerResult(analysis.analyzerResult);
+        setTechAdvisorResult(analysis.techAdvisorResult);
+        setExpertFinderResult(analysis.expertFinderResult);
+        setPlannerResult(analysis.plannerResult);
 
-      // 2. Synthesize all 4 persona-driven analyses based on the real repository data
-      const analyzerRes = analyzeProjectWithPersona(details);
-      const techAdvisorRes = adviseTechStackWithPersona(details);
-      const expertFinderRes = findExpertsWithPersona(details);
-      const plannerRes = planAfterlifeWithPersona(details);
+        if (currentModule === 'dashboard') {
+          setCurrentModule('analyzer');
+        }
+        return;
+      } catch (backendErr: unknown) {
+        const msg = backendErr instanceof Error ? backendErr.message : String(backendErr);
+        // If it's a specific validation or 404 error from the backend, show it directly
+        if (msg.includes('Please enter a') || msg.includes('could not be analyzed')) {
+          throw backendErr;
+        }
+        
+        console.warn('Backend API unavailable or error; falling back to client-side engine:', msg);
+        // Fallback to client-side analysis if backend server is not running
+        const details = await fetchRepositoryDetails(url);
+        setRepoDetails(details);
 
-      setAnalyzerResult(analyzerRes);
-      setTechAdvisorResult(techAdvisorRes);
-      setExpertFinderResult(expertFinderRes);
-      setPlannerResult(plannerRes);
+        setAnalyzerResult(analyzeProjectWithPersona(details));
+        setTechAdvisorResult(adviseTechStackWithPersona(details));
+        setExpertFinderResult(findExpertsWithPersona(details));
+        setPlannerResult(planAfterlifeWithPersona(details));
 
-      // If user launched analysis from the dashboard, transition them directly to Project Analyzer
-      if (currentModule === 'dashboard') {
-        setCurrentModule('analyzer');
+        if (currentModule === 'dashboard') {
+          setCurrentModule('analyzer');
+        }
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

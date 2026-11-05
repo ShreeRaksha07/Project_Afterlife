@@ -4,8 +4,7 @@ import {
   Layers,
   Users2,
   Rocket,
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
 import type { ModuleId, RepoDetails } from '../../types';
 import { RepoUrlInput } from '../common/RepoUrlInput';
@@ -78,91 +77,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
   return (
     <div>
-      {/* Hero Banner */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #0b1329 0%, #1e1b4b 60%, #311042 100%)',
-          color: '#ffffff',
-          borderRadius: 'var(--radius-xl)',
-          padding: '36px 32px',
-          marginBottom: '28px',
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: 'var(--shadow-md)',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}
-      >
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '820px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: 'rgba(167, 139, 250, 0.2)',
-              border: '1px solid rgba(167, 139, 250, 0.4)',
-              borderRadius: '20px',
-              padding: '4px 12px',
-              fontSize: '12px',
-              fontWeight: 600,
-              color: '#c4b5fd',
-              marginBottom: '14px'
-            }}
-          >
-            <Sparkles size={14} />
-            <span>AI-Powered Continuity Platform for Student Innovators</span>
-          </div>
-
-          <h1
-            style={{
-              fontSize: '34px',
-              fontWeight: 800,
-              letterSpacing: '-0.02em',
-              marginBottom: '10px',
-              lineHeight: 1.2
-            }}
-          >
-            "Don't let your project end with the hackathon. Give it an Afterlife."
-          </h1>
-
-          <p
-            style={{
-              fontSize: '16px',
-              color: '#cbd5e1',
-              marginBottom: '24px',
-              lineHeight: 1.5
-            }}
-          >
-            Project Afterlife transforms abandoned hackathon, college, and academic prototypes into sustainable, real-world software through four specialized AI personas.
-          </p>
-
-          {/* 4 Pillars Summary */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
-              gap: '12px'
-            }}
-          >
-            <div style={{ background: 'rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '10px 14px' }}>
-              <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>1. Diagnostic</div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: 2 }}>WHAT YOU HAVE</div>
-            </div>
-            <div style={{ background: 'rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '10px 14px' }}>
-              <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>2. Architecture</div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: 2 }}>WHAT YOU NEED</div>
-            </div>
-            <div style={{ background: 'rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '10px 14px' }}>
-              <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>3. Ecosystem</div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: 2 }}>WHO CAN HELP</div>
-            </div>
-            <div style={{ background: 'rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '10px 14px' }}>
-              <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>4. Roadmap</div>
-              <div style={{ fontSize: '13px', fontWeight: 700, color: '#ffffff', marginTop: 2 }}>WHAT TO DO NEXT</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* GitHub Repository Input */}
       <RepoUrlInput
         currentUrl={currentUrl}
