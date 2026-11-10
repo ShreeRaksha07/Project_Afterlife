@@ -14,6 +14,9 @@ GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b").strip()
 # GitHub Configuration (optional personal access token to avoid rate limits)
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "").strip()
 
+# Neon PostgreSQL Database Configuration
+DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+
 # Server Configuration
 PORT = int(os.getenv("PORT", 5000))
 DEBUG = os.getenv("FLASK_DEBUG", "True").lower() in ("true", "1", "yes")
